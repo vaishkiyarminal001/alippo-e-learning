@@ -2,18 +2,19 @@ package com.app.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.app.exception.NotFoundException;
+import com.app.exception.SomethingWentWrong;
 import com.app.models.ClassSession;
-import com.app.repo.ClassSessionRepository;
 
-@Service
+
 public interface ClassSessionService {
-    
-    
-    ClassSession createClassSession(ClassSession classSession);
-    
-    List<ClassSession> getAllClassSessions();
-    
+	ClassSession createClassSession(ClassSession classSession) throws SomethingWentWrong;
+
+	ClassSession getClassSessionById(Long sessionId) throws NotFoundException;
+
+	List<ClassSession> getAllClassSessions() throws SomethingWentWrong;
+
+	List<ClassSession> getClassSessionsByCourse(Long courseId) throws NotFoundException;
+
+	ClassSession deleteClassSession(Long sessionId) throws NotFoundException;
 }

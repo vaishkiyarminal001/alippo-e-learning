@@ -3,6 +3,8 @@ package com.app.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,29 +12,37 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "classSession")
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClassSession {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long sessionId;
-	
-	@ManyToOne
-	@JoinColumn(name = "courseId")
-	private Course course;
-	
-	private LocalDate date;
-	
-	private LocalTime time;
-	
-	private String topic;
-	
-	private String zoomLink;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long sessionId;
+
+    @NotNull(message = "Course is required")
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    @JsonIgnore
+    private Course course;
+
+    @NotNull(message = "Date is required")
+    private LocalDate date;
+
+    @NotNull(message = "Time is required")
+    private LocalTime time;
+
+    @NotBlank(message = "Topic is required")
+    private String topic;
+
+    private String zoomLink;
 }

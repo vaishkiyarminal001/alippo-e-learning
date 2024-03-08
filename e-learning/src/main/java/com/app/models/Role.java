@@ -1,6 +1,6 @@
 package com.app.models;
 
-public enum UserRole {
+public enum Role {
 	STUDENT,
 	INSTRUCTOR
 

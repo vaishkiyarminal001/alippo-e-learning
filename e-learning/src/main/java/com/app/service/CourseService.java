@@ -2,18 +2,23 @@ package com.app.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.app.exception.NotFoundException;
+import com.app.exception.SomethingWentWrong;
 import com.app.models.Course;
-import com.app.repo.CourseRepository;
 
-@Service
+
 public interface CourseService {
-   
-    
-    Course createCourse(Course course);
-    
-    List<Course> getAllCourses();
-    
+
+	Course createCourse(Course course) throws SomethingWentWrong;
+
+	Course getCourseById(Long courseId) throws NotFoundException;
+
+	List<Course> getAllCourses() throws SomethingWentWrong;
+	
+	Course updateCourse(Course course, Long courseId) throws NotFoundException, SomethingWentWrong; 
+
+//	List<Course> getCoursesByCategory(String category) throws SomethingWentWrong;
+
+	Course deleteCourse(Long courseId) throws NotFoundException;
+
 }
