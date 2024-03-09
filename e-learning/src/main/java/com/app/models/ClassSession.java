@@ -24,25 +24,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassSession {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long classSessionId;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sessionId;
+	@ManyToOne
+	@JoinColumn(name = "course_id")
+	@JsonIgnore
+	private Course course;
+	
+	@ManyToOne
+	@JoinColumn(name = "instructor_id")
+	@JsonIgnore
+	private Instructor instructor;
+	
+	@ManyToOne
+	@JoinColumn(name = "student_id")
+	@JsonIgnore
+	private Student student;
 
-    @NotNull(message = "Course is required")
-    @ManyToOne
-    @JoinColumn(name = "courseId")
-    @JsonIgnore
-    private Course course;
+	
+	private LocalDate date;
 
-    @NotNull(message = "Date is required")
-    private LocalDate date;
+	
+	private String time;
 
-    @NotNull(message = "Time is required")
-    private LocalTime time;
+	@NotBlank(message = "Topic is required")
+	private String topic;
 
-    @NotBlank(message = "Topic is required")
-    private String topic;
+	private String zoomLink;
 
-    private String zoomLink;
+	
 }

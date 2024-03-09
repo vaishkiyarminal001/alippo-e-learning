@@ -23,25 +23,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Payment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long paymentId;
 
-    @NotNull(message = "Student is required")
-    @ManyToOne
-    @JoinColumn(name = "studentId")
-    @JsonIgnore
-    private Student student;
+	@ManyToOne
+	@JoinColumn(name = "student_id")
+	@JsonIgnore
+	private Student student;
 
-    @NotNull(message = "Course is required")
-    @ManyToOne
-    @JoinColumn(name = "courseId")
-    @JsonIgnore
-    private Course course;
+	@ManyToOne
+	@JoinColumn(name = "course_id")
+	@JsonIgnore
+	private Course course;
 
-    @NotNull(message = "Amount is required")
-    private double amount;
+	@NotNull(message = "Amount is required")
+	private double amount;
 
-    @NotNull(message = "Payment date is required")
-    private LocalDateTime paymentDate;
+	@NotNull(message = "Payment date is required")
+	private LocalDateTime paymentDate;
 }

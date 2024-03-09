@@ -8,7 +8,7 @@ import com.app.models.ClassSession;
 
 
 public interface ClassSessionService {
-	ClassSession createClassSession(ClassSession classSession) throws SomethingWentWrong;
+	ClassSession createClassSession(ClassSession classSession,Long instructorId, Long studentId) throws SomethingWentWrong;
 
 	ClassSession getClassSessionById(Long sessionId) throws NotFoundException;
 
@@ -16,5 +16,5 @@ public interface ClassSessionService {
 
 	List<ClassSession> getClassSessionsByCourse(Long courseId) throws NotFoundException;
 
-	ClassSession deleteClassSession(Long sessionId) throws NotFoundException;
+	ClassSession deleteClassSession(Long sessionId, Long instructorId) throws NotFoundException;
 }

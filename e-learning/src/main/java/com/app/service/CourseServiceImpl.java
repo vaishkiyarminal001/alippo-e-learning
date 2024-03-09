@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.app.exception.NotFoundException;
 import com.app.exception.SomethingWentWrong;
 import com.app.models.Course;
+import com.app.models.Instructor;
 import com.app.repo.CourseRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,10 +18,19 @@ public class CourseServiceImpl implements CourseService {
     
     @Autowired
     private CourseRepository courseRepository;
+    
+    @Autowired
+    private InstructorService instructorService;
 
+    @Transactional
     @Override
-    public Course createCourse(Course course) throws SomethingWentWrong {
+    public Course createCourse(Course course, Long instructorId) throws SomethingWentWrong {
         try {
+        	Instructor instructor = instructorService.getInstructorById(instructorId);
+//        	System.out.println(instructorId);
+//        	System.out.println(course.getCourseId());
+        	course.setInstructor(instructor);
+//        	System.out.println(course.getCourseId());
             return courseRepository.save(course);
         } catch (Exception ex) {
             throw new SomethingWentWrong("Error occurred while creating course");

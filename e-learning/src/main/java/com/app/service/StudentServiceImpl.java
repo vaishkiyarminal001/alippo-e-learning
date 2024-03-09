@@ -1,5 +1,8 @@
 package com.app.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,8 +10,6 @@ import com.app.exception.NotFoundException;
 import com.app.exception.SomethingWentWrong;
 import com.app.models.Student;
 import com.app.repo.StudentRepository;
-
-import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -19,7 +20,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student createStudent(Student student) throws SomethingWentWrong {
         try {
-            return studentRepository.save(student);
+        	System.out.println(student);
+            Student st =  studentRepository.save(student);
+            System.out.println(student);
+            return st;
         } catch (Exception ex) {
             throw new SomethingWentWrong("Error occurred while creating student");
         }
@@ -46,4 +50,11 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.delete(student);
         return student;
     }
+    
+    public Optional<Student> findByEmail(String Email) {
+		Optional<Student> user= studentRepository.findByEmail(Email);
+		 if(user.isEmpty()) throw new SomethingWentWrong("No Student found");
+		 return user;
+	}
+    
 }

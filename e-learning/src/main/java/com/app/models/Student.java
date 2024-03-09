@@ -3,8 +3,12 @@ package com.app.models;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,7 +16,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,25 +27,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Student {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studentId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long studentId;
 
-    @NotBlank(message = "Name is required")
-    private String name;
+	@NotBlank(message = "Name is required")
+	private String name;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
-    private String email;
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email format")
+	private String email;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters long")
-    private String password;
+	@NotBlank(message = "Password is required")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
 
-    @OneToMany(mappedBy = "student")
-    @JsonIgnore
-    private List<Course> courses;
+	@JsonIgnore
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+	private List<Course> courses;
 
-    private Role role = Role.STUDENT;
+	@JsonIgnore
+	@Enumerated(EnumType.STRING)
+	private Role role = Role.STUDENT;
 }
-
